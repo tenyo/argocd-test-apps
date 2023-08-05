@@ -9,11 +9,10 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  # sourceNamespaces:
-  # - ingress-nginx
+  sourceNamespaces:
+  - ingress-nginx
   sourceRepos:
   - '*'
-  # Only permit applications to deploy to the guestbook namespace in the same cluster
   destinations:
   - namespace: ingress-nginx
     server: https://kubernetes.default.svc
