@@ -1,3 +1,4 @@
+{{- if .Values.spec.metallb.enabled }}
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
@@ -12,7 +13,7 @@ spec:
   sourceRepos:
   - '*'
   destinations:
-  - namespace: metallb-system
+  - namespace: {{ .Values.spec.metallb.namespace }}
     server: {{ .Values.spec.destination.server }}
   # Allow all cluster-scoped resources to be created
   clusterResourceWhitelist:
@@ -30,7 +31,7 @@ spec:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: metallb-system
+  name: {{ .Values.spec.metallb.namespace }}
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 ---
@@ -41,10 +42,28 @@ metadata:
   namespace: {{ .Values.spec.argocd.namespace }}
 spec:
   destination:
-    namespace: metallb-system
+    namespace: {{ .Values.spec.metallb.namespace }}
     server: {{ .Values.spec.destination.server }}
   source:
     repoURL: 'https://metallb.github.io/metallb'
     chart: metallb
-    targetRevision: v0.13.10
+    targetRevision: {{ .Values.spec.metallb.version }}
   project: metallb
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: default
+  namespace: {{ .Values.spec.metallb.namespace }}
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: default
+  namespace: {{ .Values.spec.metallb.namespace }}
+spec:
+  addresses:
+{{- range .Values.spec.metallb.addresses }}
+  - {{ . }}
+{{- end}}
+{{- end}}

@@ -1,8 +1,22 @@
 spec:
-  argocd:
-    namespace: argocd
   destination:
     server: https://kubernetes.default.svc
   source:
     repoURL: https://github.com/tenyo/argocd-test-apps
     targetRevision: tg-init
+
+  argocd:
+    namespace: argocd
+
+  ingress-nginx:
+    enabled: true
+    version: 4.7.1
+    namespace: ingress-nginx
+
+  metallb:
+    enabled: true
+    version: v0.13.10
+    namespace: metallb-system
+    addresses:
+      - 10.3.3.100/32
+      - 10.3.3.200/32
