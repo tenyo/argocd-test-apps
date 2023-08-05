@@ -16,10 +16,9 @@ spec:
   destinations:
   - namespace: ingress-nginx
     server: {{ .Values.spec.destination.server }}
-  # Deny all cluster-scoped resources from being created, except for Namespace
-  # clusterResourceWhitelist:
-  # - group: ''
-  #   kind: Namespace
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
   # Allow all namespaced-scoped resources to be created, except for ResourceQuota, LimitRange, NetworkPolicy
   # namespaceResourceBlacklist:
   # - group: ''
