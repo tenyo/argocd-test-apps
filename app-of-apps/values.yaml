@@ -1,4 +1,6 @@
 spec:
+  argocd:
+    namespace: argocd
   destination:
     server: https://kubernetes.default.svc
   source:

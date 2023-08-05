@@ -3,19 +3,18 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: ingress-nginx
-  namespace: argocd
+  namespace: {{ .Values.spec.argocd.namespace }}
   annotations:
     argocd.argoproj.io/sync-wave: "-2"  
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  # sourceNamespaces:
-  # - ingress-nginx
   sourceRepos:
   - '*'
   destinations:
   - namespace: ingress-nginx
     server: {{ .Values.spec.destination.server }}
+  # Allow all cluster-scoped resources to be created
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
@@ -39,13 +38,12 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: ingress-nginx
-  namespace: argocd
+  namespace: {{ .Values.spec.argocd.namespace }}
 spec:
   destination:
     namespace: ingress-nginx
     server: {{ .Values.spec.destination.server }}
   source:
-    path: ''
     repoURL: 'https://kubernetes.github.io/ingress-nginx'
     chart: ingress-nginx
     targetRevision: 4.7.1
