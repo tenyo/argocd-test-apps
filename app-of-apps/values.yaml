@@ -20,3 +20,8 @@ spec:
     addresses:
       - 10.3.3.100/32
       - 10.3.3.200/32
+
+  externalDNS:
+    enabled: true
+    version: 6.22.0
+    namespace: external-dns
