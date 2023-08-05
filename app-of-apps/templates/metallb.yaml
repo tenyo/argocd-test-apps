@@ -1,0 +1,50 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: metallb
+  namespace: {{ .Values.spec.argocd.namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"  
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  sourceRepos:
+  - '*'
+  destinations:
+  - namespace: metallb-system
+    server: {{ .Values.spec.destination.server }}
+  # Allow all cluster-scoped resources to be created
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  # Allow all namespaced-scoped resources to be created, except for ResourceQuota, LimitRange, NetworkPolicy
+  # namespaceResourceBlacklist:
+  # - group: ''
+  #   kind: ResourceQuota
+  # - group: ''
+  #   kind: LimitRange
+  # - group: ''
+  #   kind: NetworkPolicy
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: metallb-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb
+  namespace: {{ .Values.spec.argocd.namespace }}
+spec:
+  destination:
+    namespace: metallb-system
+    server: {{ .Values.spec.destination.server }}
+  source:
+    repoURL: 'https://metallb.github.io/metallb'
+    chart: metallb
+    targetRevision: v0.13.10
+  project: metallb
