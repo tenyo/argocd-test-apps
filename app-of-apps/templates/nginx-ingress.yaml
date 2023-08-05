@@ -9,13 +9,13 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  sourceNamespaces:
-  - ingress-nginx
+  # sourceNamespaces:
+  # - ingress-nginx
   sourceRepos:
   - '*'
-  destinations:
-  - namespace: ingress-nginx
-    server: https://kubernetes.default.svc
+  # destinations:
+  # - namespace: ingress-nginx
+  #   server: https://kubernetes.default.svc
   # Deny all cluster-scoped resources from being created, except for Namespace
   # clusterResourceWhitelist:
   # - group: ''
