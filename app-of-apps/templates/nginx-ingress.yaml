@@ -17,9 +17,9 @@ spec:
   - namespace: ingress-nginx
     server: https://kubernetes.default.svc
   # Deny all cluster-scoped resources from being created, except for Namespace
-  clusterResourceWhitelist:
-  - group: ''
-    kind: Namespace
+  # clusterResourceWhitelist:
+  # - group: ''
+  #   kind: Namespace
   # Allow all namespaced-scoped resources to be created, except for ResourceQuota, LimitRange, NetworkPolicy
   namespaceResourceBlacklist:
   - group: ''
@@ -40,12 +40,13 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: ingress-nginx
-  namespace: ingress-nginx
 spec:
-  project: ingress-nginx
-  source:
-    repoURL: https://kubernetes.github.io/ingress-nginx.git
-    targetRevision: HEAD
   destination:
-    server: https://kubernetes.default.svc
-    namespace: ingress-nginx
+    namespace: nginx-ingress
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: ''
+    repoURL: 'https://kubernetes.github.io/ingress-nginx'
+    chart: ingress-nginx
+    targetRevision: 4.7.1
+  project: ingress-nginx
