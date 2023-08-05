@@ -17,8 +17,8 @@ spec:
     server: {{ .Values.spec.destination.server }}
   # Allow all cluster-scoped resources to be created
   clusterResourceWhitelist:
-  - group: ''
-    kind: 'Namespace'
+  - group: '*'
+    kind: '*'
   # Allow all namespaced-scoped resources to be created, except for ResourceQuota, LimitRange, NetworkPolicy
   namespaceResourceBlacklist:
   - group: ''
