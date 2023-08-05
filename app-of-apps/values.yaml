@@ -8,7 +8,7 @@ spec:
   argocd:
     namespace: argocd
 
-  ingress-nginx:
+  ingressNginx:
     enabled: true
     version: 4.7.1
     namespace: ingress-nginx
