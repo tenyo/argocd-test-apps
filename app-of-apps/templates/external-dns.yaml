@@ -47,6 +47,7 @@ metadata:
   name: external-dns
   namespace: {{ .Values.spec.argocd.namespace }}
 spec:
+  project: external-dns
   destination:
     namespace: {{ .Values.spec.externalDNS.namespace }}
     server: {{ .Values.spec.destination.server }}
@@ -54,5 +55,10 @@ spec:
     repoURL: 'https://charts.bitnami.com/bitnami'
     chart: external-dns
     targetRevision: {{ .Values.spec.externalDNS.version }}
-  project: external-dns
+    helm:
+      values: |
+        policy: sync
+        provider: cloudflare
+        cloudflare:
+          proxied: false
 {{- end}}
