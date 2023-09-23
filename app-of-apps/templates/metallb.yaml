@@ -57,12 +57,16 @@ kind: L2Advertisement
 metadata:
   name: default
   namespace: {{ .Values.spec.metallb.namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
 ---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
   name: default
   namespace: {{ .Values.spec.metallb.namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
 spec:
   addresses:
 {{- range .Values.spec.metallb.addresses }}
