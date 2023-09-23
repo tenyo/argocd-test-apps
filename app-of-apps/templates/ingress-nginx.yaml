@@ -40,6 +40,8 @@ kind: Application
 metadata:
   name: ingress-nginx
   namespace: {{ .Values.spec.argocd.namespace }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: {{ .Values.spec.ingressNginx.namespace }}

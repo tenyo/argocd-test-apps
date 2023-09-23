@@ -40,6 +40,8 @@ kind: Application
 metadata:
   name: metallb
   namespace: {{ .Values.spec.argocd.namespace }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: {{ .Values.spec.metallb.namespace }}

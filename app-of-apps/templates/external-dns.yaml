@@ -46,6 +46,8 @@ kind: Application
 metadata:
   name: external-dns
   namespace: {{ .Values.spec.argocd.namespace }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: external-dns
   destination:
