@@ -48,7 +48,7 @@ spec:
     server: {{ .Values.spec.destination.server }}
   source:
     repoURL: 'https://github.com/tenyo/argocd-test-apps.git'
-    revision: "tg-init"
+    targetRevision: "tg-init"
     path: metallb
     # chart: metallb
     # targetRevision: {{ .Values.spec.metallb.version }}
