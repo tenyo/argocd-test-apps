@@ -47,9 +47,11 @@ spec:
     namespace: {{ .Values.spec.metallb.namespace }}
     server: {{ .Values.spec.destination.server }}
   source:
-    repoURL: 'https://metallb.github.io/metallb'
-    chart: metallb
-    targetRevision: {{ .Values.spec.metallb.version }}
+    repoURL: 'https://github.com/tenyo/argocd-test-apps.git'
+    revision: "tg-init"
+    path: metallb
+    # chart: metallb
+    # targetRevision: {{ .Values.spec.metallb.version }}
   project: metallb
 # ---
 # apiVersion: metallb.io/v1beta1
