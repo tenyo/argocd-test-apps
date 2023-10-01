@@ -1,0 +1,60 @@
+{{- if .Values.spec.certManager.enabled }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: cert-manager
+  namespace: {{ .Values.spec.argocd.namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"  
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  sourceRepos:
+  - '*'
+  destinations:
+  - namespace: {{ .Values.spec.certManager.namespace }}
+    server: {{ .Values.spec.destination.server }}
+  # Allow all cluster-scoped resources to be created
+  clusterResourceWhitelist:
+  - kind: 'Namespace'
+    group: ''
+  - kind: 'ServiceAccount'
+    group: ''
+  - kind: 'ClusterRole'
+    group: 'rbac.authorization.k8s.io'
+  - kind: 'ClusterRoleBinding'
+    group: 'rbac.authorization.k8s.io'
+  # Allow all namespaced-scoped resources to be created, except for ResourceQuota, LimitRange, NetworkPolicy
+  namespaceResourceBlacklist:
+  - group: ''
+    kind: ResourceQuota
+  - group: ''
+    kind: LimitRange
+  - group: ''
+    kind: NetworkPolicy
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.spec.certManager.namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: {{ .Values.spec.argocd.namespace }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: {{ .Values.spec.certManager.namespace }}
+    server: {{ .Values.spec.destination.server }}
+  source:
+    repoURL: 'https://github.com/tenyo/argocd-test-apps.git'
+    targetRevision: "tg-init"
+    path: cert-manager
+  project: cert-manager
+{{- end}}

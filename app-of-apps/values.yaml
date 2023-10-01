@@ -17,6 +17,10 @@ spec:
     version: 4.7.1
     namespace: ingress-nginx
 
+  certManager:
+    enabled: true
+    namespace: cert-manager
+
   externalDNS:
     enabled: true
     namespace: external-dns
