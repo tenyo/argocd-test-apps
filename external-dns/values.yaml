@@ -3,4 +3,4 @@ external-dns:
   provider: cloudflare
   cloudflare:
     proxied: false
-    secretName: cloudflare-apikey
+    secretName: cloudflare-api-secret

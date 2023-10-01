@@ -2,8 +2,8 @@
 
 ## Secret
 
-The chart expects a secret `cloudflare-apikey` for the Cloudflare API key.
+The chart expects a secret `cloudflare-api-secret` with the Cloudflare API token.
 
 ```
-kubectl -n external-dns create secret generic cloudflare-apikey --from-literal=cloudflare_api_token=CHANGEME
+kubectl -n external-dns create secret generic cloudflare-api-secret --from-literal=cloudflare_api_token=CHANGEME
 ```
