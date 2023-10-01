@@ -25,5 +25,5 @@ appVersion: "1.13.1"
 
 dependencies:
   - name: cert-manager
-    version: "0.12.5"
-    repository: "https://charts.bitnami.com/bitnami"
+    version: "1.13.1"
+    repository: "https://charts.jetstack.io"
