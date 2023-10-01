@@ -1,0 +1,6 @@
+external-dns:
+  policy: sync
+  provider: cloudflare
+  cloudflare:
+    proxied: false
+    secretName: cloudflare-apikey

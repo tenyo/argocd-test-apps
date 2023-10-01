@@ -49,18 +49,12 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: external-dns
   destination:
     namespace: {{ .Values.spec.externalDNS.namespace }}
     server: {{ .Values.spec.destination.server }}
   source:
-    repoURL: 'https://charts.bitnami.com/bitnami'
-    chart: external-dns
-    targetRevision: {{ .Values.spec.externalDNS.version }}
-    helm:
-      values: |
-        policy: sync
-        provider: cloudflare
-        cloudflare:
-          proxied: false
+    repoURL: 'https://github.com/tenyo/argocd-test-apps.git'
+    targetRevision: "tg-init"
+    path: external-dns
+  project: external-dns
 {{- end}}
