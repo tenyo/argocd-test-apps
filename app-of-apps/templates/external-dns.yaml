@@ -15,7 +15,6 @@ spec:
   destinations:
   - namespace: {{ .Values.spec.externalDNS.namespace }}
     server: {{ .Values.spec.destination.server }}
-  # Allow all cluster-scoped resources to be created
   clusterResourceWhitelist:
   - kind: 'Namespace'
     group: ''

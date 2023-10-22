@@ -23,4 +23,4 @@ Login at https://localhost:8080/ and create the app-of-apps, or you can create i
 kubectl -n argocd apply -f app-of-apps.yaml
 ```
 
-Sync the app-of-apps and then just sync the `metallb`` and `ingress-nginx` apps.
+Sync the app-of-apps and then just sync the `metallb` and `ingress-nginx` apps.
