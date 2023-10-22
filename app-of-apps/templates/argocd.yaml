@@ -1,0 +1,48 @@
+{{- if .Values.spec.argocd.enabled }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: argocd
+  namespace: {{ .Values.spec.argocd.namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"  
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  sourceRepos:
+  - '*'
+  destinations:
+  - namespace: {{ .Values.spec.argocd.namespace }}
+    server: {{ .Values.spec.destination.server }}
+  - namespace: kube-system
+    server: {{ .Values.spec.destination.server }}
+  # Allow all cluster-scoped resources to be created
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.spec.argocd.namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: {{ .Values.spec.argocd.namespace }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: {{ .Values.spec.argocd.namespace }}
+    server: {{ .Values.spec.destination.server }}
+  source:
+    repoURL: 'https://github.com/tenyo/argocd-test-apps.git'
+    targetRevision: "tg-init"
+    path: argocd
+  project: argocd
+{{- end}}

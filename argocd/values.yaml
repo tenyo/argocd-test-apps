@@ -1,0 +1,5 @@
+argo-cd:
+  params:
+    server.insecure: false
+
+hostname: argocd.tenyo.xyz

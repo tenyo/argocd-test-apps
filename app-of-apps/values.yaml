@@ -6,6 +6,7 @@ spec:
     targetRevision: tg-init
 
   argocd:
+    enabled: true
     namespace: argocd
 
   metallb:
