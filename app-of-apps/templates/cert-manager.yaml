@@ -16,6 +16,7 @@ spec:
   - namespace: {{ .Values.spec.certManager.namespace }}
     server: {{ .Values.spec.destination.server }}
   # Allow all cluster-scoped resources to be created
+  clusterResourceWhitelist:
   - group: '*'
     kind: '*'
 ---
